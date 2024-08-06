@@ -8,6 +8,23 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+cdCORS_URLS_REGEX = r'^/api/.*$'
+
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'SERIALIZERS': {
+        'user_create': 'api.serializers.CustomUserCreateSerializer',
+        'user': 'api.serializers.CustomUserDetailSerializer',
+        'current_user': 'api.serializers.CustomUserDetailSerializer',
+    },
+    'PERMISSIONS': {
+        'user_list': ['rest_framework.permissions.AllowAny'],
+        'user': ['rest_framework.permissions.AllowAny'],
+    }
+}
+
 AUTH_USER_MODEL = 'users.FoodGramUser'
 
 
@@ -19,15 +36,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_filters',
+    'corsheaders',
     'rest_framework.authtoken',
     'djoser',
     'users.apps.UsersConfig',
     'api.apps.ApiConfig',
+    'recipes.apps.RecipesConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -107,16 +128,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-DJOSER = {
-    'LOGIN_FIELD': 'email',
-    'SERIALIZERS': {
-        'user_create': 'api.serializers.CustomUserCreateSerializer',
-        'user': 'api.serializers.CustomUserSerializer',
-        'current_user': 'api.serializers.UserSerializer',
-        'user_list': 'api.serializers.CustomUserSerializer',
-    },
-}
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
