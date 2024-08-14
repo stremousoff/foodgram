@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.shortcuts import redirect
-from django.urls import include, path, reverse
+from django.urls import include, path
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView

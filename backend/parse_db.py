@@ -19,4 +19,3 @@ with open('ingredients.csv', 'r', encoding='utf-8') as file:
             ).save()
         except ValueError as error:
             print(error, ingredient)
-

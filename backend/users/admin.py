@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.urls import reverse
-from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
 from users import models
@@ -8,7 +6,8 @@ from users import models
 
 @admin.register(models.FoodGramUser)
 class FoodGramUserAdmin(admin.ModelAdmin):
-    list_display = ('image_display', 'username', 'email', 'first_name', 'last_name')
+    list_display = ('image_display', 'username', 'email', 'first_name',
+                    'last_name')
     list_filter = ('username',)
     list_display_links = ('image_display', 'username',)
     verbose_name = 'Пользователи'

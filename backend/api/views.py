@@ -37,7 +37,8 @@ class UserFoodgramViewSet(UserViewSet):
         serializer = CustomUserDetailSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
-    @action(detail=False, url_path='me', permission_classes=[IsAuthenticated,])
+    @action(detail=False, url_path='me',
+            permission_classes=[IsAuthenticated, ])
     def me(self, request):
         serializer = CustomUserDetailSerializer(
             get_object_or_404(User, username=request.user),
@@ -46,7 +47,7 @@ class UserFoodgramViewSet(UserViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=['put', 'delete'], url_path='me/avatar',
-            permission_classes=[IsAuthenticated,])
+            permission_classes=[IsAuthenticated, ])
     def avatar(self, request):
         user = User.objects.get(username=request.user.username)
         if request.method == 'PUT':
@@ -67,7 +68,7 @@ class UserFoodgramViewSet(UserViewSet):
 
     @action(detail=False, url_path='subscriptions',
             serializer_class=SubscriptionsListSerializer,
-            permission_classes=[OwnerAdminOrReadOnly,])
+            permission_classes=[OwnerAdminOrReadOnly, ])
     def subscriptions(self, request):
         following = Subscription.objects.filter(follower=request.user)
         users = [User.objects.get(id=user.user_id) for user in following]
@@ -78,7 +79,7 @@ class UserFoodgramViewSet(UserViewSet):
 
     @action(detail=True, methods=['post', 'delete'], url_path='subscribe',
             serializer_class=SubscriptionSerializer,
-            permission_classes=[OwnerAdminOrReadOnly,])
+            permission_classes=[OwnerAdminOrReadOnly, ])
     def subscribe(self, request, id):
         user = request.user
         follower = get_object_or_404(User, id=id)
@@ -132,7 +133,7 @@ class RecipeViewSet(ModelViewSet):
         serializer.save(author=self.request.user)
 
     @action(detail=True, methods=['post', 'delete'],
-            permission_classes=[IsAuthenticated,])
+            permission_classes=[IsAuthenticated, ])
     def favorite(self, request, pk=None):
         recipe = get_object_or_404(Recipe, id=pk)
         user = request.user
@@ -160,7 +161,7 @@ class RecipeViewSet(ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     @action(detail=True, methods=['post', 'delete'],
-            permission_classes=[IsAuthenticatedOrReadOnly,])
+            permission_classes=[IsAuthenticatedOrReadOnly, ])
     def shopping_cart(self, request, pk=None):
         recipe = get_object_or_404(Recipe, id=pk)
         user = request.user

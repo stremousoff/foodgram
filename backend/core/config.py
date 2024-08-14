@@ -23,5 +23,3 @@ class Config:
     LAST_NAME_MAX_LENGTH = 150
     PASSWORD_MAX_LENGTH = 20
     DIRECTORY_AVATAR = 'users/'
-
-
