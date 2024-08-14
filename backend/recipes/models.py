@@ -1,14 +1,23 @@
+import random
+import string
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from foodgram import settings
+from recipes.validators import cooking_time_validator
 
-user = get_user_model()
+User = get_user_model()
 
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=128, verbose_name='Название ингредиента')
-    measurement_unit = models.CharField(max_length=64, verbose_name='Единица измерения')
+    name = models.CharField(
+        max_length=128,
+        verbose_name='Название ингредиента'
+    )
+    measurement_unit = models.CharField(
+        max_length=64,
+        verbose_name='Единица измерения'
+    )
 
     class Meta:
         verbose_name = 'Ингредиент'
@@ -33,13 +42,54 @@ class Tag(models.Model):
 
 
 class Recipe(models.Model):
-    tags = models.ManyToManyField(Tag, related_name='recipes', verbose_name='Теги')
-    author = models.ForeignKey(user, on_delete=models.CASCADE, related_name='recipes', verbose_name='Автор')
-    ingredients = models.ManyToManyField(Ingredient, through='RecipeIngredient', verbose_name='Ингредиенты')
-    name = models.CharField(max_length=256, verbose_name='Название рецепта', unique=True)
-    image = models.ImageField(upload_to='recipes/', verbose_name='Изображение', null=True, blank=True)
+    tags = models.ManyToManyField(
+        Tag,
+        related_name='recipes',
+        verbose_name='Теги'
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='recipes',
+        verbose_name='Автор'
+    )
+    ingredients = models.ManyToManyField(
+        Ingredient,
+        through='RecipeIngredient',
+        verbose_name='Ингредиенты'
+    )
+    name = models.CharField(
+        max_length=256,
+        verbose_name='Название рецепта',
+        unique=True
+    )
+    image = models.ImageField(
+        upload_to='recipes/',
+        verbose_name='Изображение',
+        null=True,
+        blank=True
+    )
     text = models.TextField(verbose_name='Описание рецепта')
-    cooking_time = models.PositiveSmallIntegerField(verbose_name='Время приготовления')
+    cooking_time = models.PositiveSmallIntegerField(
+        verbose_name='Время приготовления',
+        validators=[cooking_time_validator]
+    )
+    short_url = models.CharField(
+        max_length=6,
+        unique=True,
+        null=True,
+        blank=True
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.short_url:
+            self.short_url = ''.join(
+                random.choices(string.ascii_letters + string.digits, k=4)
+            )
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return f'{self.short_url}'
 
     class Meta:
         verbose_name = 'Рецепт'
@@ -51,9 +101,20 @@ class Recipe(models.Model):
 
 
 class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='Рецепт')
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, verbose_name='Ингредиент')
-    amount = models.PositiveSmallIntegerField(verbose_name='Количество', default=1)
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        verbose_name='Рецепт'
+    )
+    ingredient = models.ForeignKey(
+        Ingredient,
+        on_delete=models.CASCADE,
+        verbose_name='Ингредиент'
+    )
+    amount = models.PositiveSmallIntegerField(
+        verbose_name='Количество',
+        default=1
+    )
 
     class Meta:
         verbose_name = 'Ингредиент в рецепте'
@@ -65,8 +126,16 @@ class RecipeIngredient(models.Model):
 
 
 class UserRecipe(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь')
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='Рецепт')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        verbose_name='Рецепт'
+    )
 
     class Meta:
         verbose_name = 'Рецепт пользователя'
@@ -78,8 +147,16 @@ class UserRecipe(models.Model):
 
 
 class ShoppingCart(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Пользователь')
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='Рецепт')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        verbose_name='Рецепт'
+    )
 
     class Meta:
         verbose_name = 'Список покупок'
@@ -88,3 +165,25 @@ class ShoppingCart(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.recipe}'
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    follower = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='follower',
+        verbose_name='Подписчик'
+    )
+
+    class Meta:
+        verbose_name = 'Подписчик'
+        verbose_name_plural = 'Подписчики'
+        ordering = ('user',)
+
+    def __str__(self):
+        return f'{self.user} - {self.follower}'
