@@ -11,7 +11,7 @@ class FoodGramUser(AbstractUser):
                                 unique=True, validators=(username_validator,))
     first_name = models.CharField(max_length=Config.FIRST_NAME_MAX_LENGTH)
     last_name = models.CharField(max_length=Config.LAST_NAME_MAX_LENGTH)
-    password = models.CharField(max_length=Config.PASSWORD_MAX_LENGTH)
+    # password = models.CharField(max_length=Config.PASSWORD_MAX_LENGTH)
     avatar = models.ImageField(upload_to=Config.DIRECTORY_AVATAR, null=True)
 
     class Meta(AbstractUser.Meta):

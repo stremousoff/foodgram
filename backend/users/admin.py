@@ -1,11 +1,12 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from django.utils.safestring import mark_safe
 
 from users import models
 
 
 @admin.register(models.FoodGramUser)
-class FoodGramUserAdmin(admin.ModelAdmin):
+class FoodGramUserAdmin(UserAdmin):
     list_display = ('image_display', 'username', 'email', 'first_name',
                     'last_name')
     list_filter = ('username',)

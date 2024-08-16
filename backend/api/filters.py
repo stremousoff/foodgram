@@ -28,7 +28,7 @@ class RecipeFilter(filters.FilterSet):
         return queryset.filter(tags__slug__in=value)
 
     def filter_author(self, queryset, name, value):
-        return queryset.filter(author=self.request.user)
+        return queryset.filter(author=self.data['author'])
 
     def filter_is_in_shopping_cart(self, queryset, name, value):
         if self.request.user.is_anonymous:

@@ -63,6 +63,14 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         queryset=Ingredient.objects.all(),
         required=True
     )
+    amount = serializers.IntegerField(required=True)
+
+    def validate_amount(self, value):
+        if value <= 0:
+            raise serializers.ValidationError(
+                'Количество должно быть больше нуля'
+            )
+        return value
 
     class Meta:
         model = RecipeIngredient
@@ -149,11 +157,11 @@ class RecipeSerializerPost(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Ингредиенты должны быть разными.'
             )
-        for ingredient in ingredients:
-            if ingredient['amount'] < 1:
-                raise serializers.ValidationError(
-                    'Количество ингредиента должно быть не меньше 1.'
-                )
+        # for ingredient in ingredients:
+        #     if ingredient['amount'] < 1:
+        #         raise serializers.ValidationError(
+        #             {'amount': 'Количество ингредиента должно быть не меньше 1.'}
+        #         )
         return ingredients
 
     def validate_image(self, image):

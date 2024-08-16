@@ -3,6 +3,8 @@ import string
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Q, F
+from rest_framework.exceptions import ValidationError
 
 from recipes.validators import cooking_time_validator
 
@@ -45,7 +47,7 @@ class Recipe(models.Model):
     tags = models.ManyToManyField(
         Tag,
         related_name='recipes',
-        verbose_name='Теги'
+        verbose_name='Теги',
     )
     author = models.ForeignKey(
         User,
@@ -56,7 +58,7 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(
         Ingredient,
         through='RecipeIngredient',
-        verbose_name='Ингредиенты'
+        verbose_name='Ингредиенты',
     )
     name = models.CharField(
         max_length=256,
@@ -177,13 +179,23 @@ class Subscription(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='follower',
-        verbose_name='Подписчик'
+        verbose_name='Подписан на:'
     )
 
     class Meta:
         verbose_name = 'Подписчик'
         verbose_name_plural = 'Подписчики'
         ordering = ('user',)
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'follower'],
+                name='должна быть уникальная подписка'
+            ),
+            models.CheckConstraint(
+                check=~Q(user_id=F('follower_id')),
+                name='нельзя подписаться на себя'
+            )
+        ]
 
     def __str__(self):
-        return f'{self.user} - {self.follower}'
+        return f'{self.user} подписан на {self.follower}'

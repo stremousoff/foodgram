@@ -5,7 +5,8 @@ from djoser.views import UserViewSet
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
-from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.pagination import LimitOffsetPagination, \
+    PageNumberPagination
 from rest_framework.permissions import (
     AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 )
@@ -81,8 +82,8 @@ class UserFoodgramViewSet(UserViewSet):
             serializer_class=SubscriptionSerializer,
             permission_classes=[OwnerAdminOrReadOnly, ])
     def subscribe(self, request, id):
-        user = request.user
-        follower = get_object_or_404(User, id=id)
+        user = get_object_or_404(User, id=id)
+        follower = request.user
         if request.method == 'POST':
             follow = Subscription.objects.create(user=user, follower=follower)
             serializer = self.get_serializer(follow)
@@ -121,7 +122,7 @@ class RecipeViewSet(ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
     permission_classes = (OwnerAdminOrReadOnly,)
-    pagination_class = LimitOffsetPagination
+    pagination_class = PageNumberPagination
     http_method_names = ['get', 'post', 'patch', 'delete']
 
     def get_serializer_class(self, *args, **kwargs):
