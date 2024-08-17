@@ -157,11 +157,6 @@ class RecipeSerializerPost(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'Ингредиенты должны быть разными.'
             )
-        # for ingredient in ingredients:
-        #     if ingredient['amount'] < 1:
-        #         raise serializers.ValidationError(
-        #             {'amount': 'Количество ингредиента должно быть не меньше 1.'}
-        #         )
         return ingredients
 
     def validate_image(self, image):

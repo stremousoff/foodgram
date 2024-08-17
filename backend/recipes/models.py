@@ -4,7 +4,6 @@ import string
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Q, F
-from rest_framework.exceptions import ValidationError
 
 from recipes.validators import cooking_time_validator
 
