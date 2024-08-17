@@ -5,11 +5,10 @@ from djoser.views import UserViewSet
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
-from rest_framework.pagination import LimitOffsetPagination, \
-    PageNumberPagination
-from rest_framework.permissions import (
-    AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
-)
+from rest_framework.pagination import (LimitOffsetPagination,
+                                       PageNumberPagination)
+from rest_framework.permissions import (AllowAny, IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
@@ -18,11 +17,10 @@ from recipes.models import (Ingredient, Recipe, ShoppingCart, Subscription,
 
 from .filters import IngredientFilter, RecipeFilter
 from .permissions import OwnerAdminOrReadOnly
-from .serializers import (
-    AvatarSerializer, IngredientSerializer, RecipeSerializerGet,
-    RecipeSerializerPost, SubscriptionsListSerializer, TagSerializer,
-    CustomUserDetailSerializer, SubscriptionSerializer
-)
+from .serializers import (AvatarSerializer, CustomUserDetailSerializer,
+                          IngredientSerializer, RecipeSerializerGet,
+                          RecipeSerializerPost, SubscriptionSerializer,
+                          SubscriptionsListSerializer, TagSerializer)
 
 User = get_user_model()
 

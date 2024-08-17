@@ -1,9 +1,8 @@
-from django.contrib import admin, messages
-from django.core.exceptions import ValidationError
+from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Recipe, Tag, Ingredient, Subscription, UserRecipe, \
-    ShoppingCart, RecipeIngredient
+from .models import (Ingredient, Recipe, RecipeIngredient, ShoppingCart,
+                     Subscription, Tag, UserRecipe)
 
 
 class RecipeIngredientInline(admin.TabularInline):
