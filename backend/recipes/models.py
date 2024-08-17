@@ -2,10 +2,10 @@ import random
 import string
 
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.db.models import Q, F
-
-from recipes.validators import cooking_time_validator
 
 User = get_user_model()
 
@@ -67,13 +67,16 @@ class Recipe(models.Model):
     image = models.ImageField(
         upload_to='recipes/',
         verbose_name='Изображение',
-        null=True,
-        blank=True
     )
     text = models.TextField(verbose_name='Описание рецепта')
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления',
-        validators=[cooking_time_validator]
+        validators=[
+            MinValueValidator(
+                limit_value=1,
+                message='Время приготовления должно быть не менее одной минуты'
+            ),
+        ]
     )
     short_url = models.CharField(
         max_length=6,
@@ -114,7 +117,12 @@ class RecipeIngredient(models.Model):
     )
     amount = models.PositiveSmallIntegerField(
         verbose_name='Количество',
-        default=1
+        validators=[
+            MinValueValidator(
+                limit_value=1,
+                message='Количество должно быть не менее одного ингредиента'
+            ),
+        ]
     )
 
     class Meta:
@@ -142,6 +150,12 @@ class UserRecipe(models.Model):
         verbose_name = 'Рецепт пользователя'
         verbose_name_plural = 'Рецепты пользователя'
         ordering = ('user',)
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='нельзя добавить один и тот же рецепт в избранное дважды'
+            ),
+        ]
 
     def __str__(self):
         return f'{self.user} - {self.recipe}'
@@ -163,6 +177,12 @@ class ShoppingCart(models.Model):
         verbose_name = 'Список покупок'
         verbose_name_plural = 'Списки покупок'
         ordering = ('user',)
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'recipe'],
+                name='нельзя добавить один и тот же рецепт в корзину дважды'
+            ),
+        ]
 
     def __str__(self):
         return f'{self.user} - {self.recipe}'
@@ -195,6 +215,10 @@ class Subscription(models.Model):
                 name='нельзя подписаться на себя'
             )
         ]
+
+    def clean(self):
+        if self.user == self.follower:
+            raise ValidationError('Нельзя подписаться на себя')
 
     def __str__(self):
         return f'{self.user} подписан на {self.follower}'

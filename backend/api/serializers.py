@@ -63,7 +63,6 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         queryset=Ingredient.objects.all(),
         required=True
     )
-    amount = serializers.IntegerField(required=True)
 
     def validate_amount(self, value):
         if value <= 0:
@@ -167,21 +166,7 @@ class RecipeSerializerPost(serializers.ModelSerializer):
         return image
 
     def to_representation(self, recipe):
-        representation = super().to_representation(recipe)
-        representation['tags'] = TagSerializer(recipe.tags, many=True).data
-        ingredients = [
-            {
-                'id': ingredient_for_recipe.ingredient.id,
-                'name': ingredient_for_recipe.ingredient.name,
-                'measurement_unit': ingredient_for_recipe.ingredient
-                .measurement_unit,
-                'amount': ingredient_for_recipe.amount
-            } for ingredient_for_recipe in RecipeIngredient.objects.filter(
-                recipe=recipe
-            )
-        ]
-        representation['ingredients'] = ingredients
-        return representation
+        return RecipeSerializerGet(recipe, context=self.context).data
 
 
 class RecipeSerializerGet(serializers.ModelSerializer):

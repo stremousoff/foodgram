@@ -1,4 +1,5 @@
-from django.contrib import admin
+from django.contrib import admin, messages
+from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 
 from .models import Recipe, Tag, Ingredient, Subscription, UserRecipe, \
@@ -7,7 +8,7 @@ from .models import Recipe, Tag, Ingredient, Subscription, UserRecipe, \
 
 class RecipeIngredientInline(admin.TabularInline):
     model = RecipeIngredient
-    extra = 1
+    extra = 0
     min_num = 1
 
 
@@ -49,8 +50,10 @@ class SubscriptionAdmin(admin.ModelAdmin):
 @admin.register(UserRecipe)
 class UserRecipeAdmin(admin.ModelAdmin):
     list_display = ('user', 'recipe')
+    unique_together = ('user', 'recipe')
 
 
 @admin.register(ShoppingCart)
 class ShoppingCartAdmin(admin.ModelAdmin):
     list_display = ('user', 'recipe')
+    unique_together = ('user', 'recipe')
