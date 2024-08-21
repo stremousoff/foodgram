@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.http import FileResponse
+from django.shortcuts import redirect
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet
 from rest_framework import status
@@ -10,10 +11,11 @@ from rest_framework.pagination import (LimitOffsetPagination,
 from rest_framework.permissions import (AllowAny, IsAuthenticated,
                                         IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from recipes.models import (Ingredient, Recipe, ShoppingCart, Subscription,
-                            Tag, UserRecipe)
+from recipes.models import (Ingredient, Recipe, ShoppingCart, Tag, Favorite)
+from users.models import Subscription
 
 from .filters import IngredientFilter, RecipeFilter
 from .permissions import OwnerAdminOrReadOnly
@@ -115,12 +117,20 @@ class IngredientViewSet(ReadOnlyModelViewSet):
     pagination_class = None
 
 
+class PaginationLimit(PageNumberPagination):
+    def paginate_queryset(self, queryset, request, view=None):
+        limit = request.GET.get('limit')
+        if limit:
+            self.page_size = int(limit)
+        return super().paginate_queryset(queryset, request, view)
+
+
 class RecipeViewSet(ModelViewSet):
     queryset = Recipe.objects.all()
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
     permission_classes = (OwnerAdminOrReadOnly,)
-    pagination_class = PageNumberPagination
+    pagination_class = PaginationLimit
     http_method_names = ['get', 'post', 'patch', 'delete']
 
     def get_serializer_class(self, *args, **kwargs):
@@ -137,7 +147,7 @@ class RecipeViewSet(ModelViewSet):
         recipe = get_object_or_404(Recipe, id=pk)
         user = request.user
         if request.method == 'POST':
-            favourite, status_create = UserRecipe.objects.get_or_create(
+            favourite, status_create = Favorite.objects.get_or_create(
                 user=user, recipe=recipe
             )
             if not status_create:
@@ -150,8 +160,8 @@ class RecipeViewSet(ModelViewSet):
                 status=status.HTTP_201_CREATED
             )
         try:
-            favourite = UserRecipe.objects.get(user=user, recipe=recipe)
-        except UserRecipe.DoesNotExist:
+            favourite = Favorite.objects.get(user=user, recipe=recipe)
+        except Favorite.DoesNotExist:
             return Response(
                 {'error': 'Рецепт не добавлен в избранное'},
                 status=status.HTTP_400_BAD_REQUEST
@@ -214,3 +224,10 @@ class RecipeViewSet(ModelViewSet):
         recipe = get_object_or_404(Recipe, id=pk)
         url = f'{request.get_host()}/s/' + recipe.short_url
         return Response({'short-link': url}, status=status.HTTP_200_OK)
+
+
+class ShortLinkRedirectView(APIView):
+    def get(self, request, short_url):
+        recipe = get_object_or_404(Recipe, short_url=short_url)
+        return redirect(f'/recipes/{recipe.id}/')
+

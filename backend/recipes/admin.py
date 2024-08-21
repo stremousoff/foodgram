@@ -1,8 +1,11 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import (Ingredient, Recipe, RecipeIngredient, ShoppingCart,
-                     Subscription, Tag, UserRecipe)
+from recipes.models import (
+    Ingredient, Recipe, RecipeIngredient, ShoppingCart, Tag, Favorite
+)
+
+from users.models import Subscription
 
 
 class RecipeIngredientInline(admin.TabularInline):
@@ -46,7 +49,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('user', 'follower')
 
 
-@admin.register(UserRecipe)
+@admin.register(Favorite)
 class UserRecipeAdmin(admin.ModelAdmin):
     list_display = ('user', 'recipe')
     unique_together = ('user', 'recipe')

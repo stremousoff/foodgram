@@ -16,7 +16,6 @@ CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'SERIALIZERS': {
-        'user_create': 'api.serializers.CustomUserCreateSerializer',
         'user': 'api.serializers.CustomUserDetailSerializer',
         'current_user': 'api.serializers.CustomUserDetailSerializer',
     },

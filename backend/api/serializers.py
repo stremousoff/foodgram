@@ -1,24 +1,15 @@
+from drf_extra_fields.fields import Base64ImageField
 from django.contrib.auth import get_user_model
 from django.db.transaction import atomic
-from djoser.serializers import UserCreateSerializer, UserSerializer
+from djoser.serializers import UserSerializer
 from rest_framework import serializers
 
-from core.utils import Base64ImageField
-from recipes.models import (Ingredient, Recipe, RecipeIngredient, ShoppingCart,
-                            Subscription, Tag, UserRecipe)
+from recipes.models import (
+    Ingredient, Recipe, RecipeIngredient, ShoppingCart, Tag, Favorite
+)
+from users.models import Subscription
 
 User = get_user_model()
-
-
-class CustomUserCreateSerializer(UserCreateSerializer):
-    class Meta(UserCreateSerializer.Meta):
-        model = User
-        fields = ('email', 'id', 'username', 'first_name', 'last_name',
-                  'password')
-        read_only_fields = ('id',)
-        extra_kwargs = {
-            'password': {'write_only': True},
-        }
 
 
 class CustomUserDetailSerializer(UserSerializer):
@@ -130,7 +121,7 @@ class RecipeSerializerPost(serializers.ModelSerializer):
                                             recipe=recipe).exists() else False
 
     def get_is_favorited(self, recipe):
-        return self.check_object_exists(self.context, recipe, UserRecipe)
+        return self.check_object_exists(self.context, recipe, Favorite)
 
     def get_is_in_shopping_cart(self, recipe):
         return self.check_object_exists(self.context, recipe, ShoppingCart)
@@ -185,7 +176,7 @@ class RecipeSerializerGet(serializers.ModelSerializer):
                                             recipe=recipe).exists() else False
 
     def get_is_favorited(self, recipe):
-        return self.check_object_exists(self.context, recipe, UserRecipe)
+        return self.check_object_exists(self.context, recipe, Favorite)
 
     def get_is_in_shopping_cart(self, recipe):
         return self.check_object_exists(self.context, recipe, ShoppingCart)

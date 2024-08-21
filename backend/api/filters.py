@@ -22,7 +22,7 @@ class RecipeFilter(filters.FilterSet):
     def filter_is_favorited(self, queryset, name, value):
         if self.request.user.is_anonymous:
             return queryset
-        return queryset.filter(userrecipe__user=self.request.user)
+        return queryset.filter(favorite__user=self.request.user)
 
     def filter_tags(self, queryset, name, value):
         return queryset.filter(tags__slug__in=value)

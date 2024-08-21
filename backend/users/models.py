@@ -1,22 +1,78 @@
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
+from django.db.models import Q, F
 
-from core.config import Config
-from users.validators import username_validator
+from users.constants import Config
 
 
 class FoodGramUser(AbstractUser):
-    email = models.EmailField(max_length=Config.EMAIL_MAX_LENGTH, unique=True)
-    username = models.CharField(max_length=Config.USERNAME_MAX_LENGTH,
-                                unique=True, validators=(username_validator,))
-    first_name = models.CharField(max_length=Config.FIRST_NAME_MAX_LENGTH)
-    last_name = models.CharField(max_length=Config.LAST_NAME_MAX_LENGTH)
-    # password = models.CharField(max_length=Config.PASSWORD_MAX_LENGTH)
-    avatar = models.ImageField(upload_to=Config.DIRECTORY_AVATAR, null=True)
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'username',]
+    USERNAME_FIELD = 'email'
 
-    class Meta(AbstractUser.Meta):
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+    email = models.EmailField(
+        Config.EMAIL,
+        max_length=Config.EMAIL_MAX_LENGTH,
+        unique=True,
+    )
+    username = models.CharField(
+        Config.USERNAME,
+        max_length=Config.USERNAME_MAX_LENGTH,
+        validators=(UnicodeUsernameValidator(),),
+        unique=True,
+    )
+    first_name = models.CharField(
+        Config.FIRST_NAME,
+        max_length=Config.FIRST_NAME_MAX_LENGTH,
+    )
+    last_name = models.CharField(
+        Config.LAST_NAME,
+        max_length=Config.LAST_NAME_MAX_LENGTH,
+    )
+    avatar = models.ImageField(
+        Config.AVATAR,
+        upload_to=Config.DIRECTORY_AVATAR,
+        null=True,
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = Config.USER
+        verbose_name_plural = Config.USERS
+        ordering = ('username',)
 
     def __str__(self):
         return self.username[:Config.LENGTH_ON_STR]
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        FoodGramUser,
+        on_delete=models.CASCADE,
+        verbose_name=Config.USERNAME,
+        related_name='followers',
+
+    )
+    follower = models.ForeignKey(
+        FoodGramUser,
+        on_delete=models.CASCADE,
+        verbose_name=Config.FOLLOWER
+    )
+
+    class Meta:
+        verbose_name = Config.SUBSCRIPTION
+        verbose_name_plural = Config.SUBSCRIPTIONS
+        ordering = ('user',)
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'follower'],
+                name='subscription_exists'
+            ),
+            models.CheckConstraint(
+                check=~Q(user_id=F('follower_id')),
+                name='no_self_following'
+            )
+        ]
+
+    def __str__(self):
+        return f'{self.follower} --> {self.user}'
