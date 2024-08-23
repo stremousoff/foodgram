@@ -182,9 +182,8 @@ class GetRecipeSerializer(serializers.ModelSerializer):
     def _check_object_exists(context, recipe, model):
         user = context['request'].user
         return (
-            user_request.is_authenticated
-            and Subscription.objects.filter(user=user_request,
-                                            follower=user).exists()
+            user.is_authenticated
+            and model.objects.filter(user=user, recipe=recipe).exists()
         )
 
     def get_is_favorited(self, recipe):
