@@ -2,7 +2,7 @@ import random
 import string
 
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import UniqueConstraint
 
@@ -172,8 +172,8 @@ class RecipeIngredient(models.Model):
         ]
 
     def __str__(self):
-        return (f'{self.ingredient[:Config.LENGTH_ON_STR]} -> '
-                f'{self.recipe[:Config.LENGTH_ON_STR]}')
+        return (f'{self.ingredient.name[:Config.LENGTH_ON_STR]} -> '
+                f'{self.recipe.name[:Config.LENGTH_ON_STR]}')
 
 
 class UserRecipe(models.Model):
