@@ -24,9 +24,11 @@ class FoodGramUserSerializer(UserSerializer):
 
     def get_is_subscribed(self, user):
         user_request = self.context['request'].user
-        return (user_request.is_authenticated and
+        return (
+                user_request.is_authenticated and
                 Subscription.objects.filter(user=user_request,
-                                            follower=user).exists())
+                                            follower=user).exists()
+        )
 
 
 class AvatarSerializer(UserSerializer):
@@ -179,8 +181,10 @@ class GetRecipeSerializer(serializers.ModelSerializer):
     @staticmethod
     def _check_object_exists(context, recipe, model):
         user = context['request'].user
-        return (user.is_authenticated and
-                model.objects.filter(user=user, recipe=recipe).exists())
+        return (
+                user.is_authenticated and
+                model.objects.filter(user=user, recipe=recipe).exists()
+        )
 
     def get_is_favorited(self, recipe):
         return self._check_object_exists(self.context, recipe, Favorite)

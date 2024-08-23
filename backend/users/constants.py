@@ -23,4 +23,3 @@ class Config:
     USERS = 'Пользователи'
     SUBSCRIPTION = 'Подписка'
     SUBSCRIPTIONS = 'Подписки'
-

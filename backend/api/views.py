@@ -125,7 +125,11 @@ class PaginationLimit(PageNumberPagination):
 
 
 class RecipeViewSet(ModelViewSet):
-    queryset = Recipe.objects.select_related('author').prefetch_related('tags', 'ingredients').all()
+    queryset = (
+        Recipe.objects.select_related('author')
+        .prefetch_related('tags', 'ingredients')
+        .all()
+    )
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
     permission_classes = (OwnerAdminOrReadOnly,)
@@ -181,4 +185,3 @@ class ShortLinkRedirectView(APIView):
     def get(self, request, short_url):
         recipe = get_object_or_404(Recipe, short_url=short_url)
         return redirect(f'/recipes/{recipe.id}/')
-

@@ -7,7 +7,7 @@ from users.constants import Config
 
 
 class FoodGramUser(AbstractUser):
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'username',]
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'username', ]
     USERNAME_FIELD = 'email'
 
     email = models.EmailField(
