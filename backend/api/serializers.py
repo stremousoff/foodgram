@@ -6,6 +6,7 @@ from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
 from api.config import Error
+from api.constants import Config
 from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
                             ShoppingCart, Tag)
 from users.models import Subscription
@@ -18,8 +19,7 @@ class FoodGramUserSerializer(UserSerializer):
 
     class Meta(UserSerializer.Meta):
         model = User
-        fields = ('email', 'id', 'username', 'first_name', 'last_name',
-                  'is_subscribed', 'avatar')
+        fields = UserSerializer.Meta.fields + ('is_subscribed', 'avatar')
         read_only_fields = fields
 
     def get_is_subscribed(self, user):
@@ -27,7 +27,7 @@ class FoodGramUserSerializer(UserSerializer):
         return (
             user_request.is_authenticated
             and Subscription.objects.filter(user=user_request,
-                                            follower=user).exists()
+                                            author=user).exists()
         )
 
 
@@ -59,8 +59,8 @@ class CreateRecipeIngredientSerializer(serializers.ModelSerializer):
     amount = serializers.IntegerField(
         required=True,
         validators=[
-            MinValueValidator(1),
-            MaxValueValidator(10000)
+            MinValueValidator(Config.AMOUNT_MIN_VALUE),
+            MaxValueValidator(Config.AMOUNT_MAX_VALUE)
         ]
     )
 
@@ -89,11 +89,13 @@ class UpdateCreateRecipeSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def _create_recipe_ingredients(recipe, ingredients):
-        RecipeIngredient.objects.bulk_create([
-            RecipeIngredient(recipe=recipe, ingredient=ingredient['id'],
-                             amount=ingredient['amount'])
-            for ingredient in ingredients
-        ])
+        RecipeIngredient.objects.bulk_create(
+            RecipeIngredient(
+                recipe=recipe,
+                ingredient=ingredient['id'],
+                amount=ingredient['amount']
+            ) for ingredient in ingredients
+        )
 
     @atomic
     def create(self, validated_data):
@@ -160,12 +162,11 @@ class GetRecipeIngredientSerializer(serializers.ModelSerializer):
 
 
 class GetRecipeSerializer(serializers.ModelSerializer):
-    image = Base64ImageField(required=True)
+    image = Base64ImageField()
     tags = TagSerializer(many=True)
     author = FoodGramUserSerializer()
     ingredients = GetRecipeIngredientSerializer(
         many=True,
-        read_only=True,
         source='recipeingredient_set'
     )
     is_favorited = serializers.SerializerMethodField()
@@ -203,7 +204,7 @@ class RecipeShortSerializer(serializers.ModelSerializer):
 
 class SubscriptionsListSerializer(FoodGramUserSerializer):
     recipes = serializers.SerializerMethodField()
-    recipes_count = serializers.ReadOnlyField(source='recipes.count')
+    recipes_count = serializers.IntegerField(default=0)
 
     class Meta(FoodGramUserSerializer.Meta):
         fields = FoodGramUserSerializer.Meta.fields + (
@@ -228,23 +229,23 @@ class SubscriptionsListSerializer(FoodGramUserSerializer):
 class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
-        fields = ('user', 'follower')
+        fields = ('user', 'author')
         validators = [
             serializers.UniqueTogetherValidator(
                 queryset=Subscription.objects.all(),
-                fields=('user', 'follower')
+                fields=('user', 'author')
             ),
         ]
 
     def validate(self, data):
-        if data['user'] == data['follower']:
+        if data['user'] == data['author']:
             raise serializers.ValidationError(
                 Error.SUBSCRIPTION_YOURSELF
             )
         return data
 
     def to_representation(self, instance):
-        return SubscriptionsListSerializer(instance.follower,
+        return SubscriptionsListSerializer(instance.author,
                                            context=self.context).data
 
 
@@ -254,12 +255,13 @@ class ShoppingCartFavoriteBaseSerializer(serializers.ModelSerializer):
         fields = ('user', 'recipe')
 
     def validate(self, data):
-        if self.Meta.model.objects.filter(
+        model = self.Meta.model
+        if model.objects.filter(
                 user=data['user'],
                 recipe=data['recipe']
         ).exists():
             raise serializers.ValidationError(
-                Error.ALREADY_ADDED.format(self.Meta.model.__name__)
+                Error.ALREADY_ADDED.format(model.__name__)
             )
         return data
 

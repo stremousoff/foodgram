@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -32,14 +31,11 @@ def delete_object(request, pk, model):
     )
 
 
-def download_shopping_cart_file(ingredients):
+def shopping_cart_data(ingredients):
     file_content = '\n'.join(
         f"{ingredient['ingredient__name']}, "
         f"{ingredient['ingredient__measurement_unit']}: "
         f"{ingredient['total_amount']}"
         for ingredient in ingredients
     )
-    response = HttpResponse(file_content, content_type='text/plain')
-    response[
-        'Content-Disposition'] = 'attachment; filename="shopping_cart.txt"'
-    return response
+    return file_content

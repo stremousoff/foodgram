@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write(
-            f"Начинаю загрузку {Ingredient._meta.verbose_name}'ов в базу..."
+            f'Начинаю загрузку {Ingredient._meta.verbose_name} в базу...'
         )
         with open('../data/ingredients.csv', 'r', encoding='utf-8') as file:
             ingredients = [
@@ -18,24 +18,24 @@ class Command(BaseCommand):
             ]
             Ingredient.objects.bulk_create(ingredients, ignore_conflicts=True)
         self.stdout.write(
-            f"Загрузка {Ingredient._meta.verbose_name}'ов в базу - ЗАВЕРШЕНА\n"
-            f"Всего ингредиентов в базе: {Ingredient.objects.count()}\n"
-            f"-----------------------------------------------"
-        )
-        self.stdout.write(
-            f"Начинаю загрузку {Tag._meta.verbose_name}'ов тегов в базу..."
+            f'Загрузка {Ingredient._meta.verbose_name} в базу - ЗАВЕРШЕНА\n'
+            f'Всего ингредиентов в базе: {Ingredient.objects.count()}\n'
+            f'-----------------------------------------------'
         )
         tags = [
-            ('tag1', 'tag1'),
-            ('tag2', 'tag2'),
-            ('tag3', 'tag3'),
+            ('завтрак', 'breakfast'),
+            ('обед', 'lunch'),
+            ('ужин', 'dinner'),
         ]
+        self.stdout.write(
+            f'Начинаю загрузку {Tag._meta.verbose_name} тегов в базу...'
+        )
         tag_objects = [
             Tag(name=name, slug=slug) for name, slug in tags
         ]
         Tag.objects.bulk_create(tag_objects, ignore_conflicts=True)
         self.stdout.write(
-            f"Загрузка {Tag._meta.verbose_name}'ов в базу - ЗАВЕРШЕНА\n"
-            f"Всего тегов в базе: {Tag.objects.count()}\n"
-            f"-----------------------------------------------"
+            f'Загрузка {Tag._meta.verbose_name} в базу - ЗАВЕРШЕНА\n'
+            f'Всего тегов в базе: {Tag.objects.count()}\n'
+            f'-----------------------------------------------'
         )

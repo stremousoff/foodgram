@@ -21,10 +21,15 @@ class FoodGramUserAdmin(UserAdmin):
                 f'<img src={user.avatar.url} width="60" height="60">'
             )
 
-    @staticmethod
-    def count_recipes(user):
+    @admin.display(description='Количество рецептов')
+    def count_recipes(self, user):
         return user.recipes.count()
 
-    @staticmethod
-    def is_subscribed(user):
-        return user.followers.count()
+    @admin.display(description='Количество подписок')
+    def is_subscribed(self, user):
+        return user.subscribers.count()
+
+
+@admin.register(models.Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'author')

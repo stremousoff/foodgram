@@ -660,47 +660,79 @@
     }
 },
 {
-    "model": "authtoken.token",
-    "pk": "822543888b862e80c5b20c7be27ce2aebb111dba",
+    "model": "sessions.session",
+    "pk": "e0ku2sp4ob0f1bajzon6ttog1m5oq6wr",
     "fields": {
-        "user": 3,
-        "created": "2024-08-22T10:42:05.183Z"
+        "session_data": ".eJxVjDsOwjAQBe_iGln-O6akzxmsXe-CA8iR4qRC3B0ipYD2zcx7iQzbWvPWeckTibPQ4vS7IZQHtx3QHdptlmVu6zKh3BV50C7Hmfh5Ody_gwq9fmsXB5WQsSQdQ7AKlNfJOU9snYlx0LEYgwmKuprI3gGxU7YQBQyYghXvD7ypN0M:1shugM:xtvWL4892tEQ57axLas6Eb7y2JizVOX_FjcAY_TjsRU",
+        "expire_date": "2024-09-07T17:36:10.997Z"
+    }
+},
+{
+    "model": "authtoken.token",
+    "pk": "5c992d4be9735d6fe89d93eb73bbbbd8bf362f31",
+    "fields": {
+        "user": 6,
+        "created": "2024-08-24T17:39:35.406Z"
+    }
+},
+{
+    "model": "authtoken.token",
+    "pk": "c824f1feb5888497f5b8b31686b18f52bb15c4b8",
+    "fields": {
+        "user": 5,
+        "created": "2024-08-24T17:39:37.408Z"
+    }
+},
+{
+    "model": "authtoken.token",
+    "pk": "d02b3309503b301dc23962d707634f9af358fa0e",
+    "fields": {
+        "user": 4,
+        "created": "2024-08-24T17:27:00.767Z"
+    }
+},
+{
+    "model": "authtoken.token",
+    "pk": "d16ce33e62963a83597bb351391f2e31af976d71",
+    "fields": {
+        "user": 8,
+        "created": "2024-08-24T18:10:08.403Z"
     }
 },
 {
     "model": "users.foodgramuser",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$260000$TTNVOKx0Mk0QfH0A9GxpUk$uVKqVUAaXQ2osz5+3JHQ/Nb/UpCZwuEnbqK1gFal10c=",
-        "last_login": "2024-08-22T10:30:53.132Z",
+        "password": "pbkdf2_sha256$260000$T8wsJA3PdJVnVRY2AdfP2h$BDyVaPmIgMB/puVehDPWxtXvbOZSrqIsdM83Wx0WKM0=",
+        "last_login": "2024-08-24T17:36:10.993Z",
+        "is_superuser": true,
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-08-24T16:47:39.633Z",
+        "email": "root@root.com",
+        "username": "root",
+        "first_name": "Root",
+        "last_name": "Root",
+        "avatar": "users/d07d3d07-c113-4f07-ac6b-ab313db91575.jpg",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.foodgramuser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$OYXkH4Fw4qPojU7rr9WGcf$x0AO/HFyTNd03r67KLEvJ2wSwauSP3Cox2upXKoujyY=",
+        "last_login": "2024-08-24T16:53:11.455Z",
         "is_superuser": false,
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2024-08-22T10:30:36.175Z",
+        "date_joined": "2024-08-24T16:52:53.109Z",
         "email": "anton@anton.com",
         "username": "Anton",
         "first_name": "Антон",
         "last_name": "Стремоусов",
-        "avatar": "users/5c9664f4-a2de-4a26-a59c-c9c19fc04969.jpg",
-        "groups": [],
-        "user_permissions": []
-    }
-},
-{
-    "model": "users.foodgramuser",
-    "pk": 2,
-    "fields": {
-        "password": "pbkdf2_sha256$260000$Y6fjYtiA0p0R60W51LCevd$+pbCVHXPyIRHDCTa9L1iNw0+fRABZXnQdphRtpDT5yc=",
-        "last_login": "2024-08-22T10:33:58.027Z",
-        "is_superuser": false,
-        "is_staff": false,
-        "is_active": true,
-        "date_joined": "2024-08-22T10:33:48.018Z",
-        "email": "evgen@evgen.com",
-        "username": "Evgen",
-        "first_name": "Евгений",
-        "last_name": "Салахутдинов",
-        "avatar": "users/791d4228-8ed7-4f58-9199-3b37e381bd7f.jpg",
+        "avatar": "users/373a0d32-7bef-4fe4-bdad-4618c73d6925.jpg",
         "groups": [],
         "user_permissions": []
     }
@@ -709,17 +741,112 @@
     "model": "users.foodgramuser",
     "pk": 3,
     "fields": {
-        "password": "pbkdf2_sha256$260000$BhYObOJr8uql8BGtLaq9ry$jqRJVGcA8I2bMeGAwSQHPKvodBs6VJUPFQRwsvZexBs=",
-        "last_login": "2024-08-22T10:42:05.185Z",
+        "password": "pbkdf2_sha256$260000$6qMH7HqpMgxisXqWRr7Mci$u7mYyBCZeR5V4dOWCKO9tK3e+JRPADbvXh4p5zcr8C8=",
+        "last_login": "2024-08-24T16:55:56.456Z",
         "is_superuser": false,
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2024-08-22T10:41:56.663Z",
+        "date_joined": "2024-08-24T16:55:47.694Z",
+        "email": "evgen@evgen.com",
+        "username": "Evgen",
+        "first_name": "Евгений",
+        "last_name": "Салахутдинов",
+        "avatar": "users/26580482-07a4-4456-baac-faf36bbaa677.jpg",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.foodgramuser",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$kJ57sQSaA4gOe8LmJF0hUF$UT8AeX8taAgtUv3VXuK82lHPtkpJE0esZQRR8RgCyjQ=",
+        "last_login": "2024-08-24T17:27:00.772Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-08-24T17:26:52.964Z",
         "email": "bot@bot.com",
         "username": "Bot",
         "first_name": "Бот",
         "last_name": "Ботов",
-        "avatar": "users/b3a5418c-05b8-42ef-8bc9-912431c04a22.jpg",
+        "avatar": "users/9e8b2a21-f5e5-4512-935c-0744ab486fbd.jpg",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.foodgramuser",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$OEhJAcsYhUdlm3k9ThpZ6r$NrAO6ZLMtxP869wMwUiBOzU0xjx2JYjPz2YJqLR+ZOM=",
+        "last_login": "2024-08-24T17:39:40.847Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-08-24T17:39:33.758Z",
+        "email": "vivanov@yandex.ru",
+        "username": "vasya.ivanov",
+        "first_name": "Вася",
+        "last_name": "Иванов",
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.foodgramuser",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$2ZK4JjfpBoHlxRjb0PABoi$Gq9YnxHOjwR+XE+ufkCPUvAgg/63bNlmR6N4ikpTuEU=",
+        "last_login": "2024-08-24T17:39:35.417Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-08-24T17:39:34.167Z",
+        "email": "second_user@email.org",
+        "username": "second-user",
+        "first_name": "Андрей",
+        "last_name": "Макаревский",
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.foodgramuser",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$dQrAgWyVcy0UmTS8KR4H7e$NencJAAdRTxK44iqLOEHd5F033Tk1RBsPQVJSd2Ctns=",
+        "last_login": null,
+        "is_superuser": false,
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-08-24T17:39:34.528Z",
+        "email": "third-user@user.ru",
+        "username": "third-user-username",
+        "first_name": "Гордон",
+        "last_name": "Рамзиков",
+        "avatar": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.foodgramuser",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$260000$9ItzLF298g3twlPMspu6cW$YUYPHW5tB5Iz0raBO0cOxhhhs+y9tW5RMBUHbJR3lmk=",
+        "last_login": "2024-08-24T18:10:08.406Z",
+        "is_superuser": false,
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-08-24T18:10:00.520Z",
+        "email": "moderator@moderator.com",
+        "username": "Moderator",
+        "first_name": "Будший",
+        "last_name": "Модератор",
+        "avatar": "users/ba4391d7-ad89-4166-ac4c-cee133ef3756.jpg",
         "groups": [],
         "user_permissions": []
     }
@@ -728,8 +855,8 @@
     "model": "users.subscription",
     "pk": 1,
     "fields": {
-        "user": 2,
-        "follower": 1
+        "user": 3,
+        "author": 2
     }
 },
 {
@@ -737,15 +864,55 @@
     "pk": 2,
     "fields": {
         "user": 3,
-        "follower": 2
+        "author": 1
     }
 },
 {
     "model": "users.subscription",
     "pk": 3,
     "fields": {
-        "user": 3,
-        "follower": 1
+        "user": 4,
+        "author": 3
+    }
+},
+{
+    "model": "users.subscription",
+    "pk": 4,
+    "fields": {
+        "user": 4,
+        "author": 2
+    }
+},
+{
+    "model": "users.subscription",
+    "pk": 5,
+    "fields": {
+        "user": 4,
+        "author": 1
+    }
+},
+{
+    "model": "users.subscription",
+    "pk": 6,
+    "fields": {
+        "user": 2,
+        "author": 3
+    }
+},
+{
+    "model": "users.subscription",
+    "pk": 8,
+    "fields": {
+        "user": 2,
+        "author": 1
+    }
+},
+{
+    "model": "users.subscription",
+    "pk": 9,
+    "fields": {
+        "user": 2,
+        "author": 4
     }
 },
 {
@@ -18240,24 +18407,24 @@
     "model": "recipes.tag",
     "pk": 1,
     "fields": {
-        "name": "tag1",
-        "slug": "tag1"
+        "name": "завтрак",
+        "slug": "breakfast"
     }
 },
 {
     "model": "recipes.tag",
     "pk": 2,
     "fields": {
-        "name": "tag2",
-        "slug": "tag2"
+        "name": "обед",
+        "slug": "lunch"
     }
 },
 {
     "model": "recipes.tag",
     "pk": 3,
     "fields": {
-        "name": "tag3",
-        "slug": "tag3"
+        "name": "ужин",
+        "slug": "dinner"
     }
 },
 {
@@ -18265,12 +18432,12 @@
     "pk": 1,
     "fields": {
         "author": 1,
-        "name": "Клубника",
-        "image": "recipes/178908a3-c5f3-4044-8034-3279d956492e.jpg",
-        "text": "Перебрать, помыть, съесть",
+        "name": "Рецепт от Рута. Всем ***а",
+        "image": "recipes/ad54a336-4ad8-432c-83ca-b19289febb50.jpg",
+        "text": "Рут царь и бог.\nКара постигнет любого!!!",
         "cooking_time": 1,
-        "short_url": "VZdF",
-        "add_time": "2024-08-22T10:32:24.751Z",
+        "short_url": "p5nv",
+        "add_time": "2024-08-24T16:51:33.929Z",
         "tags": [
             1,
             2,
@@ -18282,15 +18449,15 @@
     "model": "recipes.recipe",
     "pk": 2,
     "fields": {
-        "author": 1,
-        "name": "Вишня",
-        "image": "recipes/6a2c1382-6873-482d-ab98-e154751a0411.jpg",
-        "text": "Помыть и съесть",
-        "cooking_time": 1,
-        "short_url": "Ltjq",
-        "add_time": "2024-08-22T10:33:03.647Z",
+        "author": 2,
+        "name": "Рататуй. Вкус деревни.",
+        "image": "recipes/63c01873-0a9d-4a8a-bf05-70e6288058b6.jpg",
+        "text": "Рататуй классический, несмотря на свое красивое название, имеет самое что ни на есть народное происхождение: большинство историков считают, что подобное блюдо активно готовили прованские крестьяне. Такая версия вполне имеет право на существование, ведь его ингредиенты, овощи, росли повсеместно и стоили сущие гроши. Да и способ приготовления блюда не отличался особой изысканностью: ингредиенты нарезали и тушили в больших сковородах до готовности. Дешево, быстро и вкусно! Рататуй классический иногда запекают в духовке, красиво выкладывая по окружности формы и заливая томатным соусом. Однако мы предлагаем вам проверить в деле традиционный рецепт хотя бы потому, что он невероятно простой в исполнении. Итак, приступаем!",
+        "cooking_time": 60,
+        "short_url": "ocEY",
+        "add_time": "2024-08-24T16:54:43.742Z",
         "tags": [
-            1
+            3
         ]
     }
 },
@@ -18298,15 +18465,15 @@
     "model": "recipes.recipe",
     "pk": 3,
     "fields": {
-        "author": 2,
-        "name": "Малина",
-        "image": "recipes/76e74d5e-e8cb-49e1-933d-bbc90fc6e12f.jpg",
-        "text": "Перебрать, помыть - ГОТОВО!",
-        "cooking_time": 1,
-        "short_url": "1XtH",
-        "add_time": "2024-08-22T10:34:54.816Z",
+        "author": 3,
+        "name": "Омлет с колбасой, сыром и зелёным луком",
+        "image": "recipes/2e02807b-ca0f-4b9d-aa0f-31916de16e28.jpg",
+        "text": "Омлет с колбасой, сыром и зелёным луком - отличный вариант для завтрака. Омлет с молоком по этому рецепту готовится с мукой и содой, за счёт чего получается пышным и мягеньким, как яичный бисквитик.",
+        "cooking_time": 10,
+        "short_url": "OvRh",
+        "add_time": "2024-08-24T16:59:07.276Z",
         "tags": [
-            2
+            1
         ]
     }
 },
@@ -18315,14 +18482,13 @@
     "pk": 4,
     "fields": {
         "author": 2,
-        "name": "Киви",
-        "image": "recipes/2821d363-a9b1-486e-b2a6-0fac3b6eb58e.jpg",
-        "text": "Почистить и можно есть",
-        "cooking_time": 1,
-        "short_url": "yyiD",
-        "add_time": "2024-08-22T10:35:51.726Z",
+        "name": "Огурцы, маринованные в яблочном соке.",
+        "image": "recipes/8a8ae22f-3218-48dd-b32f-8f5bfc1b1e9a.jpg",
+        "text": "Огурцы, маринованные в яблочном соке, можно по праву назвать усладой для гурманов. Эта заготовка не так широко распространена, как, скажем, простые маринованные огурцы. Но она, однозначно, достойна вашего внимания. Аромат яблока и легкая кислинка делают вкус огурцов интересны. Они получаются гораздо деликатнее, чем маринованные огурцы с уксусом. Такие огурцы можно просто подать на закуску или как дополнение к вареной картошечке. Попробуйте, вам обязательно понравится!\n\nКакую же хуйню не придумают (((((:",
+        "cooking_time": 45,
+        "short_url": "6aFV",
+        "add_time": "2024-08-24T17:02:03.451Z",
         "tags": [
-            1,
             2,
             3
         ]
@@ -18332,15 +18498,15 @@
     "model": "recipes.recipe",
     "pk": 5,
     "fields": {
-        "author": 2,
-        "name": "Крыжовник",
-        "image": "recipes/654a70ab-c88a-43b0-834f-d6f22e937624.jpg",
-        "text": "Помыть и можно кушать",
-        "cooking_time": 1,
-        "short_url": "IV8y",
-        "add_time": "2024-08-22T10:36:27.944Z",
+        "author": 3,
+        "name": "Как приготовить борщ по классическому рецепту? Никак (:",
+        "image": "recipes/66c3fb7f-b93d-4323-b064-439eb0321d5b.jpg",
+        "text": "Сегодня в каждой семье есть свой рецепт борща. В кастрюлю добавляют и фасоль, и грибы, и копчёности, и даже сельдерей. Мы же научим вас готовить идеальный традиционный борщ.",
+        "cooking_time": 90,
+        "short_url": "bFtL",
+        "add_time": "2024-08-24T17:05:25.296Z",
         "tags": [
-            3
+            2
         ]
     }
 },
@@ -18349,12 +18515,77 @@
     "pk": 6,
     "fields": {
         "author": 2,
-        "name": "Яблоко",
-        "image": "recipes/bcb4b7ab-7e49-4fbf-8f32-9fd1879956cb.jpg",
-        "text": "Можно чистить/можно не чистить.",
-        "cooking_time": 1,
-        "short_url": "AvmH",
-        "add_time": "2024-08-22T10:38:03.393Z",
+        "name": "Окрошка с говядиной. Скажи колбасе - НЕТ!",
+        "image": "recipes/e2ff9a12-d4b8-4c6c-9d39-7691d2b4c3cd.jpg",
+        "text": "Можно бесконечно спорить о том, какая окрошка самая правильная – на квасе, кефире или сметане, хотя самая правильная, конечно, та, которая нравится именно вам. Впрочем, мы очень рекомендуем попробовать приготовить этот легендарный летний суп по нашему рецепту. Вы можете нарезать все ингредиенты кубиками или натереть часть из них на терке, но обязательно включите в состав ингредиентов вареный картофель, яйца, огурцы, редис и несколько видов зелени. Если вы не употребляете мясо, говядину можно заменить на отварную или запеченную птицу. Квас для окрошки лучше выбрать несладкий.",
+        "cooking_time": 30,
+        "short_url": "3TQx",
+        "add_time": "2024-08-24T17:08:55.105Z",
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "recipes.recipe",
+    "pk": 7,
+    "fields": {
+        "author": 3,
+        "name": "Хот-дог с креветками. И такое бывает (:",
+        "image": "recipes/e49c9d99-624a-4d3d-8cd1-cf549a5aa7c1.jpg",
+        "text": "Хот-дог с креветками! А разве такое бывает? Ломаем стереотипы и готовим быструю еду для тех, кто морщится при одном упоминании о сосисках. Из простого и банального перекуса на бегу блюдо сразу переходит в разряд мейнстрима. Так что готовьте хот-дог с креветками, а дегустировать отправляйтесь в парк. И не забудьте, по всем канонам моды облачиться в шорты и белые кеды. А если у вас найдется бородатый друг, непременно возьмите его с собой. И помните: этот хот-дог нужно запивать строго лавандовым рафом! Приятного аппетита!",
+        "cooking_time": 5,
+        "short_url": "r0hr",
+        "add_time": "2024-08-24T17:11:18.802Z",
+        "tags": [
+            2,
+            3
+        ]
+    }
+},
+{
+    "model": "recipes.recipe",
+    "pk": 8,
+    "fields": {
+        "author": 2,
+        "name": "Любимый горячий сэндвич Энтони Бурдена, с жареной колбасой и сыром",
+        "image": "recipes/81a337b2-a899-4456-a511-93b05cdac0aa.jpg",
+        "text": "Энтони Бурден — знаменитый американский повар и гастрономический писатель. Он много путешествовал по миру и отлично разбирался в еде. Идеи его часто противоречили общепринятым, он этим очень гордился. Горячий сэндвич с жареной колбасой он очень любил и считал квинтэссенцией всех сэндвичей.",
+        "cooking_time": 15,
+        "short_url": "pP7v",
+        "add_time": "2024-08-24T17:22:33.194Z",
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "recipes.recipe",
+    "pk": 9,
+    "fields": {
+        "author": 3,
+        "name": "Шашлык из баранины с печеными томатами и соусом из мацони",
+        "image": "recipes/2b93ddaf-9565-4342-98a0-bc552160769b.jpg",
+        "text": "Шашлык из баранины с печеными томатами и соусом из мацони – горячее, сытное, аппетитное блюдо, приготовленное на шампурах, которое украсит ваш выезд на природу и подарит незабываемые гастрономические впечатления. Баранина – не самое простое мясо, его надо уметь выбирать и правильно готовить. Но с нашим рецептом все обязательно получится. Мы предлагаем готовить шашлык из молодого барашка – ягнятина менее жирная, вкус у нее более нейтральный, а консистенция – мягкая. Сделать мясо еще более нежным поможет маринад на основе айрана – кисломолочного напитка, популярного в Средней Азии, на Кавказе и Балканах. Для аромата используем специи, которые традиционно кладут в плов с бараниной – это зира и кориандр. Сопровождают сочное мясное блюдо (и помогают ему лучше усвоиться) запеченные на решетке ароматные помидоры, маринованный лук и освежающий соус из мацони со свежей мятой и кинзой.",
+        "cooking_time": 45,
+        "short_url": "C9nF",
+        "add_time": "2024-08-24T17:24:42.950Z",
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "recipes.recipe",
+    "pk": 10,
+    "fields": {
+        "author": 4,
+        "name": "Арбузное пиво. Пришёл на всё готовое. Объелся арбуза (:",
+        "image": "recipes/9186fff5-402e-4717-a3e2-155ecec4b6bc.jpg",
+        "text": "Уже пробовали есть арбуз просто так, приготовили из него суп, салат и мороженое, а сочная сладкая ягода все не заканчивается? Тогда на очереди арбузное пиво — легкий и слабоалкогольный коктейль. Идея смешивания алкоголя и фруктовых соков или пюре, конечно, не нова. Вспомните классические беллини (игристое вино и персиковое пюре) и россини (игристое вино с клубничным пюре), например. Фрукты придают коктейлю сладость и свежесть, а заодно снижают градус алкоголя. Вы можете измельчить мякоть арбуза в блендере, но тогда придется долго и придирчиво выбирать арбузные косточки из мякоти (или купить арбуз особого сорта без косточек). Размять мякоть в пюре ложкой или толкушкой, а затем процедить через сито может оказаться значительно быстрее. Ну а если у вас есть на кухне пресс для картофеля — бинго, вы справитесь с задачей подготовки основного ингредиента для коктейля почти молниеносно!",
+        "cooking_time": 15,
+        "short_url": "aCKj",
+        "add_time": "2024-08-24T17:29:42.224Z",
         "tags": [
             1,
             2,
@@ -18364,15 +18595,15 @@
 },
 {
     "model": "recipes.recipe",
-    "pk": 7,
+    "pk": 16,
     "fields": {
-        "author": 3,
-        "name": "ЦАРЬ РЕЦЕПТОВ",
-        "image": "recipes/15b015ef-5d4f-4eaf-b4c5-5da1b93d5f62.jpg",
-        "text": "!!!ЦАРЬ И БОГ ЕДЫ!!!\nХОЛОДНАЯ КОЛА + ЛЁД = УСПЕХ",
+        "author": 8,
+        "name": "Все рецепты выше оставят хорошие и не очень люди (:",
+        "image": "recipes/a6eb9682-c061-4686-ab20-4f8a32af845a.jpg",
+        "text": "На свой мега проект Стас Басов ищет модераторов и менеджеров по рекламе ((((((((((((((:",
         "cooking_time": 1,
-        "short_url": "C17F",
-        "add_time": "2024-08-22T10:45:22.409Z",
+        "short_url": "KGQl",
+        "add_time": "2024-08-24T18:12:26.407Z",
         "tags": [
             1,
             2,
@@ -18385,8 +18616,8 @@
     "pk": 1,
     "fields": {
         "recipe": 1,
-        "ingredient": 618,
-        "amount": 1
+        "ingredient": 1280,
+        "amount": 1000
     }
 },
 {
@@ -18394,7 +18625,7 @@
     "pk": 2,
     "fields": {
         "recipe": 2,
-        "ingredient": 245,
+        "ingredient": 556,
         "amount": 1000
     }
 },
@@ -18402,44 +18633,44 @@
     "model": "recipes.recipeingredient",
     "pk": 3,
     "fields": {
-        "recipe": 3,
-        "ingredient": 936,
-        "amount": 1000
+        "recipe": 2,
+        "ingredient": 1235,
+        "amount": 200
     }
 },
 {
     "model": "recipes.recipeingredient",
     "pk": 4,
     "fields": {
-        "recipe": 4,
-        "ingredient": 598,
-        "amount": 1000
+        "recipe": 2,
+        "ingredient": 878,
+        "amount": 100
     }
 },
 {
     "model": "recipes.recipeingredient",
     "pk": 5,
     "fields": {
-        "recipe": 5,
-        "ingredient": 748,
-        "amount": 1000
+        "recipe": 2,
+        "ingredient": 879,
+        "amount": 50
     }
 },
 {
     "model": "recipes.recipeingredient",
     "pk": 6,
     "fields": {
-        "recipe": 6,
-        "ingredient": 2137,
-        "amount": 1000
+        "recipe": 2,
+        "ingredient": 1890,
+        "amount": 50
     }
 },
 {
     "model": "recipes.recipeingredient",
     "pk": 7,
     "fields": {
-        "recipe": 7,
-        "ingredient": 642,
+        "recipe": 3,
+        "ingredient": 2180,
         "amount": 500
     }
 },
@@ -18447,17 +18678,251 @@
     "model": "recipes.recipeingredient",
     "pk": 8,
     "fields": {
-        "recipe": 7,
-        "ingredient": 828,
+        "recipe": 3,
+        "ingredient": 654,
         "amount": 200
     }
 },
 {
+    "model": "recipes.recipeingredient",
+    "pk": 9,
+    "fields": {
+        "recipe": 3,
+        "ingredient": 1749,
+        "amount": 50
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 10,
+    "fields": {
+        "recipe": 4,
+        "ingredient": 1138,
+        "amount": 500
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 11,
+    "fields": {
+        "recipe": 4,
+        "ingredient": 2155,
+        "amount": 1000
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 12,
+    "fields": {
+        "recipe": 5,
+        "ingredient": 252,
+        "amount": 5000
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 13,
+    "fields": {
+        "recipe": 5,
+        "ingredient": 520,
+        "amount": 500
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 14,
+    "fields": {
+        "recipe": 5,
+        "ingredient": 1567,
+        "amount": 200
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 15,
+    "fields": {
+        "recipe": 5,
+        "ingredient": 279,
+        "amount": 500
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 16,
+    "fields": {
+        "recipe": 6,
+        "ingredient": 578,
+        "amount": 1000
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 17,
+    "fields": {
+        "recipe": 6,
+        "ingredient": 288,
+        "amount": 1
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 18,
+    "fields": {
+        "recipe": 6,
+        "ingredient": 1426,
+        "amount": 100
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 19,
+    "fields": {
+        "recipe": 6,
+        "ingredient": 879,
+        "amount": 3
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 20,
+    "fields": {
+        "recipe": 6,
+        "ingredient": 1890,
+        "amount": 1
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 21,
+    "fields": {
+        "recipe": 6,
+        "ingredient": 2180,
+        "amount": 200
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 22,
+    "fields": {
+        "recipe": 6,
+        "ingredient": 1654,
+        "amount": 100
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 23,
+    "fields": {
+        "recipe": 6,
+        "ingredient": 314,
+        "amount": 5
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 24,
+    "fields": {
+        "recipe": 7,
+        "ingredient": 727,
+        "amount": 1000
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 25,
+    "fields": {
+        "recipe": 7,
+        "ingredient": 159,
+        "amount": 200
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 26,
+    "fields": {
+        "recipe": 8,
+        "ingredient": 1988,
+        "amount": 1000
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 27,
+    "fields": {
+        "recipe": 8,
+        "ingredient": 1771,
+        "amount": 200
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 28,
+    "fields": {
+        "recipe": 8,
+        "ingredient": 657,
+        "amount": 100
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 29,
+    "fields": {
+        "recipe": 9,
+        "ingredient": 1341,
+        "amount": 500
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 30,
+    "fields": {
+        "recipe": 9,
+        "ingredient": 878,
+        "amount": 300
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 31,
+    "fields": {
+        "recipe": 9,
+        "ingredient": 989,
+        "amount": 50
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 32,
+    "fields": {
+        "recipe": 10,
+        "ingredient": 56,
+        "amount": 200
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 33,
+    "fields": {
+        "recipe": 10,
+        "ingredient": 1329,
+        "amount": 1000
+    }
+},
+{
+    "model": "recipes.recipeingredient",
+    "pk": 44,
+    "fields": {
+        "recipe": 16,
+        "ingredient": 642,
+        "amount": 1
+    }
+},
+{
     "model": "recipes.favorite",
     "pk": 1,
     "fields": {
         "user": 3,
-        "recipe": 7
+        "recipe": 8
     }
 },
 {
@@ -18465,7 +18930,7 @@
     "pk": 2,
     "fields": {
         "user": 3,
-        "recipe": 3
+        "recipe": 6
     }
 },
 {
@@ -18473,31 +18938,103 @@
     "pk": 3,
     "fields": {
         "user": 3,
-        "recipe": 1
+        "recipe": 4
     }
 },
 {
-    "model": "recipes.shoppingcart",
-    "pk": 1,
+    "model": "recipes.favorite",
+    "pk": 4,
     "fields": {
         "user": 3,
-        "recipe": 1
+        "recipe": 2
+    }
+},
+{
+    "model": "recipes.favorite",
+    "pk": 5,
+    "fields": {
+        "user": 4,
+        "recipe": 9
+    }
+},
+{
+    "model": "recipes.favorite",
+    "pk": 6,
+    "fields": {
+        "user": 4,
+        "recipe": 8
+    }
+},
+{
+    "model": "recipes.favorite",
+    "pk": 9,
+    "fields": {
+        "user": 2,
+        "recipe": 6
     }
 },
 {
     "model": "recipes.shoppingcart",
-    "pk": 2,
+    "pk": 4,
     "fields": {
         "user": 3,
-        "recipe": 3
+        "recipe": 8
     }
 },
 {
     "model": "recipes.shoppingcart",
-    "pk": 3,
+    "pk": 5,
+    "fields": {
+        "user": 3,
+        "recipe": 9
+    }
+},
+{
+    "model": "recipes.shoppingcart",
+    "pk": 6,
     "fields": {
         "user": 3,
         "recipe": 7
+    }
+},
+{
+    "model": "recipes.shoppingcart",
+    "pk": 7,
+    "fields": {
+        "user": 3,
+        "recipe": 5
+    }
+},
+{
+    "model": "recipes.shoppingcart",
+    "pk": 8,
+    "fields": {
+        "user": 4,
+        "recipe": 10
+    }
+},
+{
+    "model": "recipes.shoppingcart",
+    "pk": 9,
+    "fields": {
+        "user": 2,
+        "recipe": 6
+    }
+},
+{
+    "model": "recipes.shoppingcart",
+    "pk": 11,
+    "fields": {
+        "user": 2,
+        "recipe": 7
+    }
+},
+{
+    "model": "recipes.shoppingcart",
+    "pk": 12,
+    "fields": {
+        "user": 2,
+        "recipe": 10
     }
 }
 ]

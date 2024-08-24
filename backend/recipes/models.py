@@ -1,12 +1,10 @@
-import random
-import string
-
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.db.models import UniqueConstraint
 
 from .constants import Config
+from .utils import generate_short_url
 
 User = get_user_model()
 
@@ -25,12 +23,12 @@ class Ingredient(models.Model):
         verbose_name = Config.INGREDIENT
         verbose_name_plural = Config.INGREDIENTS
         ordering = ('name',)
-        constraints = [
+        constraints = (
             UniqueConstraint(
-                fields=['name', 'measurement_unit'],
+                fields=('name', 'measurement_unit'),
                 name='name_and_measurement_unit_unique'
             ),
-        ]
+        )
 
     def __str__(self):
         return self.name[:Config.LENGTH_ON_STR]
@@ -52,12 +50,12 @@ class Tag(models.Model):
         verbose_name = Config.TAG
         verbose_name_plural = Config.TAGS
         ordering = ('name',)
-        constraints = [
+        constraints = (
             UniqueConstraint(
-                fields=['name', 'slug'],
+                fields=('name', 'slug'),
                 name='name_and_slug_unique'
-            )
-        ]
+            ),
+        )
 
     def __str__(self):
         return self.name[:Config.LENGTH_ON_STR]
@@ -113,23 +111,17 @@ class Recipe(models.Model):
         auto_now_add=True
     )
 
-    def save(self, *args, **kwargs):
-        if not self.short_url:
-            self.short_url = ''.join(
-                random.choices(
-                    string.ascii_letters + string.digits,
-                    k=Config.MAX_URL_LENGTH
-                )
-            )
-        super().save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return f'{self.short_url}'
-
     class Meta:
         verbose_name = Config.RECIPE
         verbose_name_plural = Config.RECIPES
         ordering = ('-add_time',)
+
+    def save(self, *args, **kwargs):
+        self.short_url = generate_short_url()
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return f'{self.short_url}'
 
     def __str__(self):
         return self.name[:Config.LENGTH_ON_STR]
@@ -164,12 +156,12 @@ class RecipeIngredient(models.Model):
         verbose_name = Config.INGREDIENT_RECIPE
         verbose_name_plural = Config.INGREDIENTS_RECIPE
         ordering = ('recipe',)
-        constraints = [
+        constraints = (
             models.UniqueConstraint(
-                fields=['recipe', 'ingredient'],
+                fields=('recipe', 'ingredient'),
                 name='recipe_ingredient_unique'
             ),
-        ]
+        )
 
     def __str__(self):
         return (f'{self.ingredient.name[:Config.LENGTH_ON_STR]} -> '
@@ -192,12 +184,12 @@ class UserRecipe(models.Model):
     class Meta:
         abstract = True
         ordering = ('user',)
-        constraints = [
+        constraints = (
             models.UniqueConstraint(
-                fields=['user', 'recipe'],
+                fields=('user', 'recipe'),
                 name='%(class)s_unique'
             ),
-        ]
+        )
 
     def __str__(self):
         return (f'{self.recipe[:Config.LENGTH_ON_STR]} -> '

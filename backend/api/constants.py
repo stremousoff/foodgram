@@ -1,0 +1,3 @@
+class Config:
+    AMOUNT_MIN_VALUE = 1
+    AMOUNT_MAX_VALUE = 32767

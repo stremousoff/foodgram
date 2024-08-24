@@ -7,7 +7,7 @@ from users.constants import Config
 
 
 class FoodGramUser(AbstractUser):
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'username', ]
+    REQUIRED_FIELDS = ('first_name', 'last_name', 'username')
     USERNAME_FIELD = 'email'
 
     email = models.EmailField(
@@ -50,13 +50,13 @@ class Subscription(models.Model):
         FoodGramUser,
         on_delete=models.CASCADE,
         verbose_name=Config.USERNAME,
-        related_name='followers',
+        related_name='subscribers',
 
     )
-    follower = models.ForeignKey(
+    author = models.ForeignKey(
         FoodGramUser,
         on_delete=models.CASCADE,
-        verbose_name=Config.FOLLOWER
+        verbose_name=Config.FOLLOWER,
     )
 
     class Meta:
@@ -65,14 +65,14 @@ class Subscription(models.Model):
         ordering = ('user',)
         constraints = [
             models.UniqueConstraint(
-                fields=['user', 'follower'],
+                fields=('user', 'author'),
                 name='subscription_exists'
             ),
             models.CheckConstraint(
-                check=~Q(user_id=F('follower_id')),
+                check=~Q(user_id=F('author_id')),
                 name='no_self_following'
             )
         ]
 
     def __str__(self):
-        return f'{self.follower} --> {self.user}'
+        return f'{self.author} --> {self.user}'

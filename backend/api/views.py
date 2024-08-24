@@ -1,25 +1,24 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Count, Sum
-from django.shortcuts import redirect
+from django.http import FileResponse
 from django.urls import reverse
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
-from rest_framework.pagination import (LimitOffsetPagination,
-                                       PageNumberPagination)
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import (AllowAny, IsAuthenticated,
                                         IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
                             ShoppingCart, Tag)
 from users.models import Subscription
-from .core import add_object, delete_object, download_shopping_cart_file
+from .core import add_object, delete_object, shopping_cart_data
 from .filters import IngredientFilter, RecipeFilter
+from .pagination import PageNumberPaginator
 from .permissions import OwnerAdminOrReadOnly
 from .serializers import (AvatarSerializer, FavoriteSerializer,
                           FoodGramUserSerializer, IngredientSerializer,
@@ -67,8 +66,8 @@ class UserFoodgramViewSet(UserViewSet):
     )
     def subscriptions(self, request):
         subscriptions = (
-            User.objects.filter(subscription__user=request.user).
-            annotate(recipes_count=Count('recipes'))
+            User.objects.filter(subscription__user=request.user)
+            .annotate(recipes_count=Count('recipes'))
         )
         paginator = self.pagination_class()
         result_page = paginator.paginate_queryset(subscriptions, request)
@@ -82,7 +81,7 @@ class UserFoodgramViewSet(UserViewSet):
         serializer = self.get_serializer(
             data={
                 'user': request.user.id,
-                'follower': id
+                'author': id
             }
         )
         serializer.is_valid(raise_exception=True)
@@ -93,7 +92,7 @@ class UserFoodgramViewSet(UserViewSet):
     def unsubscribe(self, request, id):
         deleted_subscription, _ = Subscription.objects.filter(
             user=request.user,
-            follower=id
+            author=id
         ).delete()
         return Response(
             status=status.HTTP_204_NO_CONTENT
@@ -116,14 +115,6 @@ class IngredientViewSet(ReadOnlyModelViewSet):
     pagination_class = None
 
 
-class PaginationLimit(PageNumberPagination):
-    def paginate_queryset(self, queryset, request, view=None):
-        limit = request.GET.get('limit')
-        if limit:
-            self.page_size = int(limit)
-        return super().paginate_queryset(queryset, request, view)
-
-
 class RecipeViewSet(ModelViewSet):
     queryset = (
         Recipe.objects.select_related('author')
@@ -133,7 +124,7 @@ class RecipeViewSet(ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
     permission_classes = (OwnerAdminOrReadOnly,)
-    pagination_class = PaginationLimit
+    pagination_class = PageNumberPaginator
     http_method_names = ('get', 'post', 'patch', 'delete')
 
     def get_serializer_class(self, *args, **kwargs):
@@ -169,7 +160,10 @@ class RecipeViewSet(ModelViewSet):
         ).annotate(
             total_amount=Sum('amount')
         ).order_by('ingredient__name')
-        return download_shopping_cart_file(ingredients)
+        return FileResponse(
+            shopping_cart_data(ingredients),
+            content_type='text/plain'
+        )
 
     @action(detail=True, methods=['get'], url_path='get-link',
             permission_classes=(AllowAny,))
@@ -179,9 +173,3 @@ class RecipeViewSet(ModelViewSet):
             reverse('short_link_redirect', args=[recipe.short_url])
         )
         return Response({'short-link': url}, status=status.HTTP_200_OK)
-
-
-class ShortLinkRedirectView(APIView):
-    def get(self, request, short_url):
-        recipe = get_object_or_404(Recipe, short_url=short_url)
-        return redirect(f'/recipes/{recipe.id}/')

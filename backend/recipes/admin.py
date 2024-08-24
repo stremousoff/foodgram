@@ -4,7 +4,6 @@ from django.utils.safestring import mark_safe
 
 from recipes.models import (Favorite, Ingredient, Recipe, RecipeIngredient,
                             ShoppingCart, Tag)
-from users.models import Subscription
 
 
 class RecipeIngredientInline(admin.TabularInline):
@@ -51,11 +50,6 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = ('name', 'measurement_unit')
-
-
-@admin.register(Subscription)
-class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'follower')
 
 
 @admin.register(Favorite)
