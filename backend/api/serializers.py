@@ -132,17 +132,6 @@ class UpdateCreateRecipeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(Error.UNIQUE_INGREDIENTS)
         return ingredients
 
-    def validate(self, attrs):
-        error_fields = [
-            attr for attr in ('tags', 'ingredients', 'image')
-            if not attrs.get(attr, None)
-        ]
-        if error_fields:
-            raise serializers.ValidationError(
-                Error.FILD_IS_EMPTY.format(error_fields)
-            )
-        return attrs
-
     def to_representation(self, recipe):
         return GetRecipeSerializer(recipe, context=self.context).data
 
