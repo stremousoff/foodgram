@@ -66,4 +66,6 @@ docker compose exec backend python manage.py db -l
 
 Проект "Foodgram": [Foodgram](https://foodgram.sytes.net/)
 
+Документация к проекту: [ReDoc](https://foodgram.sytes.net/api/docs/)
+
 Автор проекта: [Антон Стремоусов](https://github.com/stremousoff)
