@@ -49,14 +49,15 @@ class Subscription(models.Model):
     user = models.ForeignKey(
         FoodGramUser,
         on_delete=models.CASCADE,
-        verbose_name=Config.USERNAME,
-        related_name='subscribers',
+        verbose_name=Config.FOLLOWER,
+        related_name='follower',
 
     )
     author = models.ForeignKey(
         FoodGramUser,
         on_delete=models.CASCADE,
-        verbose_name=Config.FOLLOWER,
+        verbose_name=Config.USERNAME,
+        related_name='following',
     )
 
     class Meta:
@@ -75,4 +76,4 @@ class Subscription(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.author} --> {self.user}'
+        return f'{self.user} --> {self.author}'

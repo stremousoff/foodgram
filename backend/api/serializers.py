@@ -25,9 +25,8 @@ class FoodGramUserSerializer(UserSerializer):
     def get_is_subscribed(self, user):
         user_request = self.context['request'].user
         return (
-            user_request.is_authenticated
-            and Subscription.objects.filter(user=user_request,
-                                            author=user).exists()
+                user_request.is_authenticated
+                and user_request.follower.filter(author=user).exists()
         )
 
 
@@ -58,10 +57,8 @@ class CreateRecipeIngredientSerializer(serializers.ModelSerializer):
     )
     amount = serializers.IntegerField(
         required=True,
-        validators=[
-            MinValueValidator(Config.AMOUNT_MIN_VALUE),
-            MaxValueValidator(Config.AMOUNT_MAX_VALUE)
-        ]
+        min_value=Config.AMOUNT_MIN_VALUE,
+        max_value=Config.AMOUNT_MAX_VALUE
     )
 
     class Meta:

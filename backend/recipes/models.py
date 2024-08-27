@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models import UniqueConstraint
 
 from .constants import Config
-from .utils import generate_short_url
+from .core import generate_short_url
 
 User = get_user_model()
 
@@ -90,7 +90,7 @@ class Recipe(models.Model):
     text = models.TextField(Config.TEXT_RECIPE)
     cooking_time = models.PositiveSmallIntegerField(
         Config.COOKING_TIME,
-        validators=[
+        validators=(
             MinValueValidator(
                 limit_value=Config.MIN_COOKING_TIME,
                 message=Config.MIN_COOKING_TIME_ERROR
@@ -99,7 +99,7 @@ class Recipe(models.Model):
                 limit_value=Config.MAX_COOKING_TIME,
                 message=Config.MAX_COOKING_TIME_ERROR
             )
-        ]
+        )
     )
     short_url = models.CharField(
         Config.SHORT_URL,
@@ -117,7 +117,8 @@ class Recipe(models.Model):
         ordering = ('-add_time',)
 
     def save(self, *args, **kwargs):
-        self.short_url = generate_short_url()
+        if not self.short_url:
+            self.short_url = generate_short_url()
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

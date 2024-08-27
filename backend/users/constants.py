@@ -15,7 +15,7 @@ class Config:
     FIRST_NAME = 'Имя'
     LAST_NAME = 'Фамилия'
     AVATAR = 'Аватар пользователя'
-    FOLLOWER = 'Подписчик'
+    FOLLOWER = 'Подписан'
     FOODGRAM_USER = 'Пользователь'
 
     # Verbose/plural для META

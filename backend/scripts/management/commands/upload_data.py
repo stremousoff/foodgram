@@ -10,7 +10,7 @@ class Command(BaseCommand):
         self.stdout.write(
             f'Начинаю загрузку {Ingredient._meta.verbose_name} в базу...'
         )
-        with open('../data/ingredients.csv', 'r', encoding='utf-8') as file:
+        with open('ingredients.csv', 'r', encoding='utf-8') as file:
             ingredients = [
                 Ingredient(name=name, measurement_unit=measurement_unit)
                 for line in file

@@ -66,7 +66,7 @@ class UserFoodgramViewSet(UserViewSet):
     )
     def subscriptions(self, request):
         subscriptions = (
-            User.objects.filter(subscription__user=request.user)
+            User.objects.filter(following__user=request.user)
             .annotate(recipes_count=Count('recipes'))
         )
         paginator = self.pagination_class()
