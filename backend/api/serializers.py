@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db.transaction import atomic
 from djoser.serializers import UserSerializer
 from drf_extra_fields.fields import Base64ImageField
@@ -25,8 +24,8 @@ class FoodGramUserSerializer(UserSerializer):
     def get_is_subscribed(self, user):
         user_request = self.context['request'].user
         return (
-                user_request.is_authenticated
-                and user_request.follower.filter(author=user).exists()
+            user_request.is_authenticated
+            and user_request.follower.filter(author=user).exists()
         )
 
 
