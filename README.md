@@ -51,7 +51,7 @@ docker compose exec backend python manage.py migrate
 
 6. Загрузите в базу данных начальный набор ингредиентов и тегов с помощью команды:
 ```bash
-docker compose exec backend python manage.py db -l
+docker compose exec backend python manage.py upload_data
 ```
 
 7. Вы можете открыть приложение в браузере по адресу [http://localhost](http://localhost) и увидеть его работающим.
