@@ -141,7 +141,7 @@ class RecipeIngredient(models.Model):
     )
     amount = models.PositiveSmallIntegerField(
         Config.AMOUNT,
-        validators=[
+        validators=(
             MinValueValidator(
                 limit_value=Config.MIN_INGREDIENT_AMOUNT,
                 message=Config.MIN_INGREDIENT_AMOUNT_ERROR
@@ -150,7 +150,7 @@ class RecipeIngredient(models.Model):
                 limit_value=Config.MAX_INGREDIENT_AMOUNT,
                 message=Config.MAX_INGREDIENT_AMOUNT_ERROR
             )
-        ]
+        )
     )
 
     class Meta:

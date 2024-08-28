@@ -23,3 +23,6 @@ class Config:
     USERS = 'Пользователи'
     SUBSCRIPTION = 'Подписка'
     SUBSCRIPTIONS = 'Подписки'
+
+    # Сообщения об ошибках
+    SUBSCRIPTION_YOURSELF = 'Нельзя подписаться на самого себя'

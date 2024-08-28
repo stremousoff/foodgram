@@ -27,9 +27,10 @@ class FoodGramUserAdmin(UserAdmin):
 
     @admin.display(description='Количество подписок')
     def is_subscribed(self, user):
-        return user.subscribers.count()
+        return user.subs_from_user.count()
 
 
 @admin.register(models.Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('user', 'author')
+    list_per_page = 20

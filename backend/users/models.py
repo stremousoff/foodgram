@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import F, Q
 
@@ -50,30 +51,34 @@ class Subscription(models.Model):
         FoodGramUser,
         on_delete=models.CASCADE,
         verbose_name=Config.FOLLOWER,
-        related_name='follower',
+        related_name='subs_to_author',
 
     )
     author = models.ForeignKey(
         FoodGramUser,
         on_delete=models.CASCADE,
         verbose_name=Config.USERNAME,
-        related_name='following',
+        related_name='subs_from_user',
     )
 
     class Meta:
         verbose_name = Config.SUBSCRIPTION
         verbose_name_plural = Config.SUBSCRIPTIONS
         ordering = ('user',)
-        constraints = [
+        constraints = (
             models.UniqueConstraint(
                 fields=('user', 'author'),
                 name='subscription_exists'
             ),
             models.CheckConstraint(
-                check=~Q(user_id=F('author_id')),
+                check=~Q(user=F('author')),
                 name='no_self_following'
             )
-        ]
+        )
+
+    def clean(self):
+        if self.user_id == self.author_id:
+            raise ValidationError(Config.SUBSCRIPTION_YOURSELF)
 
     def __str__(self):
         return f'{self.user} --> {self.author}'
