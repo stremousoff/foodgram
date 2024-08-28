@@ -193,8 +193,8 @@ class UserRecipe(models.Model):
         )
 
     def __str__(self):
-        return (f'{self.recipe[:Config.LENGTH_ON_STR]} -> '
-                f'{self.user[:Config.LENGTH_ON_STR]}')
+        return (f'{self.recipe.name[:Config.LENGTH_ON_STR]} -> '
+                f'{self.user.username[:Config.LENGTH_ON_STR]}')
 
 
 class Favorite(UserRecipe):
